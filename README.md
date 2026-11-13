@@ -89,7 +89,7 @@ Repository descriptions wrap by the real width of the text, so long descriptions
   <img src="https://cards.tryshyzov.ru/api/wave?type=waving&section=header&text=readme-cards&desc=cards%20for%20GitHub&color=233871,5F3189,E75395&text_animation=fade" alt="Wave header" width="100%"/>
 </p>
 <p align="center">
-  <img src="https://cards.tryshyzov.ru/api/typing?lines=tryshyzov%40MacBook%20~%20%25%20whoami;tryshyzov&font=mono&size=20&color=E75395&background=233871" alt="Typing text"/>
+  <img src="https://cards.tryshyzov.ru/api/typing?lines=tryshyzov%40MacBook%20~%20%25%20whoami;tryshyzov&size=20&color=E75395&background=233871" alt="Typing text"/>
 </p>
 <p align="center">
   <img src="https://cards.tryshyzov.ru/api/badge?label=made%20with&message=readme-cards&logo=github&style=for-the-badge&color=E75395&label_color=233871" alt="Badge"/>
@@ -101,11 +101,11 @@ Repository descriptions wrap by the real width of the text, so long descriptions
 | Effect | Address | Main options |
 |---|---|---|
 | Wave header or footer | `/api/wave` | `type` (`waving` `wave` `rect` `rounded` `slice`), `section` (`header`/`footer`), `text`, `desc`, `color` (one colour or several for a gradient), `text_animation` (`fade` `rise` `glow` `twinkle` `none`) |
-| Typing text | `/api/typing` | `lines` (separated by `;`), `multiline`, `repeat`, `center`, `font` (`mono` `sans` `serif`), `size`, `color`, `background`, `speed`, `pause` |
+| Typing text | `/api/typing` | `lines` (separated by `;`), `font`, `size`, `bold`, `color`, `background`, `center`, `vCenter`, `multiline`, `width`, `height`, `duration` (ms per line), `pause`, `repeat`, `letterSpacing`, `theme` |
 | Badge | `/api/badge` | `label`, `message`, `logo` (a [Simple Icons](https://simpleicons.org) name), `style` (`flat` `pill` `for-the-badge`), `color`, `label_color`, `shine` |
 | Decoration | `/api/decor` | `type` (`stars` `line` `dots` `sparkles`), `color`, `count`, `height`, `speed`, `seed`, `text` |
 
-These replace capsule-render, readme-typing-svg and shields.io badges, so a whole profile can live on one server. The configurator has a tab for them.
+These replace capsule-render, readme-typing-svg and shields.io badges, so a whole profile can live on one server. The typing effect is a port of [readme-typing-svg](https://github.com/DenverCoder1/readme-typing-svg) (MIT) with the same options, so its links work after swapping the domain. The configurator has a tab for them.
 
 ## ✦ Run your own server
 

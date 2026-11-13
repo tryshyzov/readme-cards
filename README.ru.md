@@ -89,7 +89,7 @@
   <img src="https://cards.tryshyzov.ru/api/wave?type=waving&section=header&text=readme-cards&desc=cards%20for%20GitHub&color=233871,5F3189,E75395&text_animation=fade" alt="Волна-шапка" width="100%"/>
 </p>
 <p align="center">
-  <img src="https://cards.tryshyzov.ru/api/typing?lines=tryshyzov%40MacBook%20~%20%25%20whoami;tryshyzov&font=mono&size=20&color=E75395&background=233871" alt="Печатающийся текст"/>
+  <img src="https://cards.tryshyzov.ru/api/typing?lines=tryshyzov%40MacBook%20~%20%25%20whoami;tryshyzov&size=20&color=E75395&background=233871" alt="Печатающийся текст"/>
 </p>
 <p align="center">
   <img src="https://cards.tryshyzov.ru/api/badge?label=made%20with&message=readme-cards&logo=github&style=for-the-badge&color=E75395&label_color=233871" alt="Плашка"/>
@@ -101,11 +101,11 @@
 | Эффект | Адрес | Главные параметры |
 |---|---|---|
 | Волна для шапки или подвала | `/api/wave` | `type` (`waving` `wave` `rect` `rounded` `slice`), `section` (`header`/`footer`), `text`, `desc`, `color` (один цвет или несколько для градиента), `text_animation` (`fade` `rise` `glow` `twinkle` `none`) |
-| Печатающийся текст | `/api/typing` | `lines` (через `;`), `multiline`, `repeat`, `center`, `font` (`mono` `sans` `serif`), `size`, `color`, `background`, `speed`, `pause` |
+| Печатающийся текст | `/api/typing` | `lines` (через `;`), `font`, `size`, `bold`, `color`, `background`, `center`, `vCenter`, `multiline`, `width`, `height`, `duration` (мс на строку), `pause`, `repeat`, `letterSpacing`, `theme` |
 | Плашка | `/api/badge` | `label`, `message`, `logo` (название из [Simple Icons](https://simpleicons.org)), `style` (`flat` `pill` `for-the-badge`), `color`, `label_color`, `shine` |
 | Украшение | `/api/decor` | `type` (`stars` `line` `dots` `sparkles`), `color`, `count`, `height`, `speed`, `seed`, `text` |
 
-Они заменяют capsule-render, readme-typing-svg и плашки shields.io, так что весь профиль может жить на одном сервере. В конструкторе для них есть отдельная вкладка.
+Они заменяют capsule-render, readme-typing-svg и плашки shields.io, так что весь профиль может жить на одном сервере. Печатающийся текст — порт [readme-typing-svg](https://github.com/DenverCoder1/readme-typing-svg) (MIT) с теми же параметрами, так что его ссылки работают, если поменять домен. В конструкторе для них есть отдельная вкладка.
 
 ## ✦ Свой сервер
 

@@ -18,8 +18,9 @@ export function decorSvg(q) {
     const count = num(q, 'count', 9, 1, 40);
     for (let i = 0; i < count; i++) {
       const x = W * ((i + 0.5) / count) + (rand() - 0.5) * (W / count) * 0.5;
-      const y = H / 2 + (rand() - 0.5) * H * 0.4;
-      const r = (0.18 + rand() * 0.22) * H;
+      // Kept fully inside the picture: centre within ±10% of the middle, radius up to 30% of the height.
+      const y = H / 2 + (rand() - 0.5) * H * 0.2;
+      const r = (0.15 + rand() * 0.15) * H;
       const c = colors[i % colors.length];
       body += `<path class="s" style="animation-delay:${(rand() * 2.4 / speed).toFixed(2)}s" fill="#${c}" d="${starPath(x, y, r)}"/>`;
     }
@@ -51,13 +52,18 @@ export function decorSvg(q) {
     const bg = stops(q.get('bg_color')) ?? stops(pal.stops.join(','));
     defs = gradientDef('bg', bg);
     const count = num(q, 'count', 60, 5, 200);
-    body = `<rect width="${W}" height="${H}" rx="${num(q, 'radius', 16, 0, 40)}" fill="url(#bg)"/>`;
+    const radius = num(q, 'radius', 16, 0, 40);
+    // Particles stay inside the rounded background: kept off the edges and clipped to its shape.
+    defs += `<clipPath id="inside"><rect width="${W}" height="${H}" rx="${radius}"/></clipPath>`;
+    body = `<rect width="${W}" height="${H}" rx="${radius}" fill="url(#bg)"/><g clip-path="url(#inside)">`;
+    const m = Math.max(8, radius * 0.6);
     for (let i = 0; i < count; i++) {
-      const x = rand() * W, y = rand() * H, r = 0.8 + rand() * (rand() > 0.85 ? 5 : 1.8);
+      const x = m + rand() * (W - 2 * m), y = m + rand() * (H - 2 * m), r = 0.8 + rand() * (rand() > 0.85 ? 5 : 1.8);
       const c = colors[Math.floor(rand() * colors.length)];
       const shape = r > 3 ? `<path d="${starPath(x, y, r * 1.6)}"` : `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}"`;
       body += `${shape} class="p" fill="#${c}" style="animation-delay:${(rand() * 3 / speed).toFixed(2)}s;animation-duration:${((1.6 + rand() * 2.4) / speed).toFixed(2)}s"/>`;
     }
+    body += '</g>';
     const text = (q.get('text') ?? '').slice(0, 80);
     if (text) {
       const fc = hex(q.get('font_color'), pal.text);

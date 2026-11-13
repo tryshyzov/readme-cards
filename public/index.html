@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>readme-cards</title>
+  <meta name="description" content="Карточки для README на GitHub: статистика, языки, серия, репозитории, активность, PyPI.">
+  <meta name="theme-color" content="#141E45">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="wave" aria-hidden="true"></div>
+
+  <header class="top">
+    <a class="brand" href="/">readme-cards <span class="star" aria-hidden="true">✦</span></a>
+    <div class="seg small" role="group" aria-label="Язык сайта" data-i18n-aria="ariaLang">
+      <button type="button" data-lang="ru" aria-pressed="true">RU</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1 data-i18n="heroTitle">Карточки для профиля на GitHub, которые не падают</h1>
+      <p class="lede" data-i18n="heroLede">Настрой карточку, скопируй код и вставь в README. Картинка обновляется сама: данные берутся с GitHub раз в пару часов.</p>
+      <div class="url">
+        <span class="prompt" aria-hidden="true">~ %</span>
+        <code id="url-text"></code>
+        <div class="url-actions">
+          <button type="button" class="btn" id="copy-readme" data-i18n="copyReadme">Скопировать для README</button>
+          <button type="button" class="link" id="copy-url" data-i18n="copyLink">или только ссылку</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="work">
+      <form class="controls" id="form" autocomplete="off">
+        <section class="box">
+          <h2 class="fs-title"><span class="star" aria-hidden="true">✦</span> <span data-i18n="cardLegend">Карточка</span></h2>
+          <div class="chips" id="types" role="radiogroup" aria-label="Карточка" data-i18n-aria="cardLegend"></div>
+          <p class="sub" data-i18n="styleLegend">Стиль</p>
+          <div class="chips" id="styles" role="radiogroup" aria-label="Стиль" data-i18n-aria="styleLegend"></div>
+        </section>
+
+        <section class="box" id="fields">
+          <h2 class="fs-title"><span class="star" aria-hidden="true">✦</span> <span data-i18n="dataLegend">Данные</span></h2>
+          <div class="grid2">
+            <label class="f" data-for="username"><span data-i18n="username">Ник на GitHub</span>
+              <input name="username" value="tryshyzov" spellcheck="false"></label>
+            <label class="f" data-for="repo"><span data-i18n="repo">Репозиторий</span>
+              <input name="repo" value="lumacam" spellcheck="false"></label>
+            <label class="f" data-for="package"><span data-i18n="package">Пакет на PyPI</span>
+              <input name="package" value="lrclib-synced" spellcheck="false"></label>
+            <label class="f" data-for="locale"><span data-i18n="cardLocale">Язык подписей</span>
+              <select name="locale"><option value="">English</option><option value="ru">Русский</option></select></label>
+            <label class="f" data-for="ring"><span data-i18n="ringMode">В кольце</span>
+              <select name="ring"><option value="" data-i18n="ringRank">Оценка</option><option value="contributions" data-i18n="ringContrib">Число вкладов</option></select></label>
+            <label class="f" data-for="langs_count"><span data-i18n="langsCount">Сколько языков</span>
+              <input name="langs_count" type="number" min="1" max="12" value="6"></label>
+            <label class="f" data-for="hide"><span data-i18n="hideLangs">Скрыть языки</span>
+              <input name="hide" placeholder="HTML, CSS" spellcheck="false"></label>
+            <label class="f" data-for="description_lines_count"><span data-i18n="descLines">Строк описания</span>
+              <input name="description_lines_count" type="number" min="1" max="6" value="3"></label>
+            <label class="f" data-for="days"><span data-i18n="days">Дней на графике</span>
+              <input name="days" type="number" min="7" max="90" value="31"></label>
+            <label class="f" data-for="weeks"><span data-i18n="weeks">Недель в календаре</span>
+              <input name="weeks" type="number" min="8" max="53" value="52"></label>
+            <label class="f" data-for="custom_title"><span data-i18n="customTitle">Свой заголовок</span>
+              <input name="custom_title" spellcheck="false"></label>
+          </div>
+          <div class="checks">
+            <label class="check" data-for="show_owner"><input type="checkbox" name="show_owner"> <span data-i18n="showOwner">Показывать владельца</span></label>
+            <label class="check" data-for="hide_title"><input type="checkbox" name="hide_title"> <span data-i18n="hideTitle">Без заголовка</span></label>
+          </div>
+        </section>
+
+        <section class="box paint">
+          <h2 class="fs-title"><span class="star" aria-hidden="true">✦</span> <span data-i18n="themeLegend">Цвета</span></h2>
+          <div class="themes" id="themes" role="radiogroup" aria-label="Тема" data-i18n-aria="themeLegend"></div>
+
+          <div class="bg-row">
+            <span class="name" data-i18n="c_bg">Фон</span>
+            <div class="seg small" role="group" aria-label="Фон" data-i18n-aria="c_bg">
+              <button type="button" data-bg="solid" aria-pressed="true" data-i18n="bgSolid">Цвет</button>
+              <button type="button" data-bg="gradient" aria-pressed="false" data-i18n="bgGradient">Градиент</button>
+            </div>
+          </div>
+          <div class="colors" id="bg-colors"></div>
+          <label class="f range" id="angle-row" hidden><span data-i18n="angle">Угол градиента</span>
+            <input id="angle" type="range" min="0" max="360" step="5" value="135"><output id="angle-out">135°</output></label>
+
+          <details class="more" id="more-colors">
+            <summary data-i18n="eachColor">Настроить каждый цвет</summary>
+            <div class="colors" id="colors"></div>
+            <button type="button" class="link" id="reset-colors" data-i18n="resetColors">Вернуть все цвета темы</button>
+          </details>
+
+          <label class="f range"><span data-i18n="radius">Скругление углов</span>
+            <input name="border_radius" type="range" min="0" max="24" value="12"><output id="radius-out">12</output></label>
+          <div class="checks">
+            <label class="check"><input type="checkbox" name="hide_border" checked> <span data-i18n="hideBorder">Без рамки</span></label>
+            <label class="check"><input type="checkbox" name="disable_animations"> <span data-i18n="noAnim">Без анимации</span></label>
+          </div>
+        </section>
+      </form>
+
+      <section class="output" aria-labelledby="preview-title">
+        <div class="output-head">
+          <h2 id="preview-title"><span class="star" aria-hidden="true">✦</span> <span data-i18n="preview">Как будет в README</span></h2>
+          <div class="seg small" role="group" aria-label="Тема GitHub" data-i18n-aria="ariaGh">
+            <button type="button" data-gh="dark" aria-pressed="true" data-i18n="ghDark">Тёмный GitHub</button>
+            <button type="button" data-gh="light" aria-pressed="false" data-i18n="ghLight">Светлый</button>
+          </div>
+        </div>
+        <div class="stage" id="stage" data-gh="dark">
+          <img id="preview" src="/api/stats?username=tryshyzov&amp;theme=tryshyzov&amp;hide_border=true" alt="" decoding="async">
+          <button type="button" class="replay" id="replay" data-i18n="replay">Повторить анимацию</button>
+          <p class="status" id="status" role="status"></p>
+        </div>
+
+        <div class="output-head">
+          <h2><span class="star" aria-hidden="true">✦</span> <span data-i18n="code">Код для вставки</span></h2>
+          <div class="seg small" role="group" aria-label="Формат" data-i18n-aria="ariaFmt">
+            <button type="button" data-fmt="md" aria-pressed="true">Markdown</button>
+            <button type="button" data-fmt="html" aria-pressed="false">HTML</button>
+          </div>
+        </div>
+        <div class="snippet">
+          <pre><code id="snippet"></code></pre>
+          <button type="button" class="btn" id="copy-snippet" data-i18n="copyCode">Скопировать код</button>
+        </div>
+        <p class="hint" data-i18n="hint">GitHub хранит картинки у себя пару часов. Если поменял настройки, а в профиле старое, подожди или допиши к ссылке &amp;v=2.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <p><span data-i18n="footer">Работает на своём сервере, без чужих сервисов.</span>
+      <a href="https://github.com/tryshyzov/readme-cards" data-i18n="source">Исходник на GitHub</a></p>
+  </footer>
+  <div class="wave wave-foot" aria-hidden="true"></div>
+
+  <a class="mini" id="mini" href="#preview-title" hidden><img alt="" id="mini-img" src="/api/stats?username=tryshyzov&amp;theme=tryshyzov&amp;hide_border=true"></a>
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

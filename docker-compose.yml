@@ -1,0 +1,33 @@
+# Two ways to run:
+#  - behind your own nginx/proxy:   docker compose up -d                  (listens on 127.0.0.1:${HOST_PORT:-3000})
+#  - standalone with HTTPS (Caddy): docker compose --profile caddy up -d  (needs DOMAIN in .env and ports 80/443 free)
+services:
+  cards:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "127.0.0.1:${HOST_PORT:-3000}:3000"
+    volumes:
+      - cache:/data
+
+  caddy:
+    image: caddy:2-alpine
+    profiles: [caddy]
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - cards
+
+volumes:
+  cache:
+  caddy_data:
+  caddy_config:

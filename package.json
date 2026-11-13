@@ -1,0 +1,13 @@
+{
+  "name": "readme-cards",
+  "version": "1.0.0",
+  "description": "Self-hosted SVG cards for GitHub READMEs: stats, languages, streak, repo pins, activity graph, PyPI",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/"
+  },
+  "engines": { "node": ">=20" },
+  "license": "MIT"
+}

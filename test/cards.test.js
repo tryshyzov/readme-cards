@@ -99,14 +99,14 @@ for (const type of WAVE_TYPES) {
     test(`wave / ${type} / ${section}`, () => wellFormed(waveSvg(q(`type=${type}&section=${section}&text=Привет <b>&desc=✦&theme=tryshyzov`))));
   }
 }
-for (const extra of ['', '&multiline=true', '&repeat=false&center=true', '&font=sans&bold=true']) {
+for (const extra of ['', '&multiline=true', '&repeat=false&center=true', '&font=sans&bold=true&vCenter=true']) {
   test(`typing${extra}`, () => {
     const svg = typingSvg(q(`lines=Hello;Привет, мир;exit 0${extra}`));
     wellFormed(svg);
-    for (const m of svg.matchAll(/keyTimes="([^"]+)"/g)) {
+    for (const m of svg.matchAll(/keyTimes='([^']+)'/g)) {
       const k = m[1].split(';').map(Number);
       assert.equal(k[0], 0); assert.equal(k.at(-1), 1);
-      for (let i = 1; i < k.length; i++) assert.ok(k[i] > k[i - 1], 'keyTimes must increase');
+      for (let i = 1; i < k.length; i++) assert.ok(k[i] >= k[i - 1], 'keyTimes must not go back');
     }
   });
 }

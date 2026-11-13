@@ -37,7 +37,13 @@
       </div>
     </section>
 
+    <div class="seg tabs" role="group" aria-label="Раздел" data-i18n-aria="ariaTabs">
+      <button type="button" data-mode="cards" aria-pressed="true" data-i18n="tabCards">Карточки</button>
+      <button type="button" data-mode="effects" aria-pressed="false" data-i18n="tabEffects">Эффекты</button>
+    </div>
+
     <div class="work">
+      <div class="controls" id="fx-form" hidden></div>
       <form class="controls" id="form" autocomplete="off">
         <section class="box">
           <h2 class="fs-title"><span class="star" aria-hidden="true">✦</span> <span data-i18n="cardLegend">Карточка</span></h2>

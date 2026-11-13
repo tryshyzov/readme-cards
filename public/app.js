@@ -1,4 +1,5 @@
 // Configurator: builds the card URL from the form, shows a live preview and the snippet.
+import { createEffects } from './effects.js';
 
 const UI = {
   ru: {
@@ -21,6 +22,7 @@ const UI = {
     footer: 'Работает на своём сервере, без чужих сервисов.', source: 'Исходник на GitHub',
     loading: 'Загружаю…', failed: 'Картинка не загрузилась. Проверь ник или название.',
     resetOne: 'Вернуть цвет темы', stop: 'Точка', addStop: 'Добавить третью точку', removeStop: 'Убрать третью точку',
+    tabCards: 'Карточки', tabEffects: 'Эффекты', ariaTabs: 'Раздел', fxTheme: 'Тема (цвета по умолчанию)',
     types: { stats: 'Статистика', langs: 'Языки', streak: 'Серия', activity: 'Активность', pin: 'Репозиторий', pypi: 'PyPI' },
     styles: { classic: 'Классика', grid: 'Плитки', minimal: 'Минимум', terminal: 'Терминал', compact: 'Компактно', donut: 'Бублик', bars: 'Столбики', heatmap: 'Календарь' },
     colors: {
@@ -49,6 +51,7 @@ const UI = {
     footer: 'Runs on its own server, no third-party services.', source: 'Source on GitHub',
     loading: 'Loading…', failed: 'The image did not load. Check the username or name.',
     resetOne: 'Back to theme colour', stop: 'Stop', addStop: 'Add a third stop', removeStop: 'Remove the third stop',
+    tabCards: 'Cards', tabEffects: 'Effects', ariaTabs: 'Section', fxTheme: 'Theme (default colours)',
     types: { stats: 'Stats', langs: 'Languages', streak: 'Streak', activity: 'Activity', pin: 'Repository', pypi: 'PyPI' },
     styles: { classic: 'Classic', grid: 'Tiles', minimal: 'Minimal', terminal: 'Terminal', compact: 'Compact', donut: 'Donut', bars: 'Bars', heatmap: 'Calendar' },
     colors: {
@@ -81,7 +84,7 @@ const state = {
   lang: 'ru', type: 'stats', style: 'classic', theme: 'tryshyzov',
   colors: {},              // overrides: key -> hex without #
   bg: null,                // override: { solid } or { angle, stops }
-  gh: 'dark', fmt: 'md',
+  gh: 'dark', fmt: 'md', mode: 'cards', fxTheme: 'tryshyzov',
 };
 
 // ---------- helpers ----------
@@ -155,12 +158,18 @@ function renderUrl(url) {
   });
 }
 
+const fxMode = () => state.mode === 'effects';
+const currentUrl = () => (fxMode() ? fx.url() : cardUrl());
+
 function renderSnippet(url) {
-  const alt = t().types[state.type];
-  const target = linkTarget();
+  const alt = fxMode() ? fx.alt() : t().types[state.type];
+  const target = fxMode() ? fx.target() : linkTarget();
   const esc = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
   let s;
-  if (state.fmt === 'md') {
+  if (fxMode() && fx.fullWidth()) {
+    // Banners should stretch to the README width, which Markdown cannot say: HTML in both formats.
+    s = `<img src="${esc(url)}" width="100%" alt="${alt}"/>`;
+  } else if (state.fmt === 'md') {
     s = `![${alt}](${url})`;
     if (target) s = `[${s}](${target})`;
   } else {
@@ -172,10 +181,10 @@ function renderSnippet(url) {
 
 let previewTimer;
 function update({ now = false } = {}) {
-  const url = cardUrl();
+  const url = currentUrl();
   renderUrl(url);
   renderSnippet(url);
-  try { history.replaceState(null, '', '#' + new URLSearchParams({ type: state.type, ...Object.fromEntries(params()) })); } catch {}
+  if (!fxMode()) try { history.replaceState(null, '', '#' + new URLSearchParams({ type: state.type, ...Object.fromEntries(params()) })); } catch {}
   clearTimeout(previewTimer);
   previewTimer = setTimeout(() => loadPreview(url), now ? 0 : 450);
 }
@@ -188,7 +197,7 @@ function loadPreview(url, bust = false) {
   $('#status').textContent = t().loading;
   img.onload = () => { img.classList.remove('loading'); $('#status').textContent = ''; };
   img.onerror = () => { img.classList.remove('loading'); $('#status').textContent = t().failed; };
-  img.alt = t().types[state.type];
+  img.alt = fxMode() ? fx.alt() : t().types[state.type];
   img.src = src;
   $('#mini-img').src = src;
 }
@@ -352,6 +361,7 @@ function applyLang() {
   for (const el of $$('[data-i18n-aria]')) el.setAttribute('aria-label', t()[el.dataset.i18nAria]);
   $$('[data-lang]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === state.lang)));
   renderTypes(); renderStyles(); renderColors();
+  if (fxMode()) fx.render();
 }
 
 // ---------- events ----------
@@ -397,9 +407,9 @@ $$('[data-gh]').forEach((b) => b.addEventListener('click', () => {
 $$('[data-fmt]').forEach((b) => b.addEventListener('click', () => {
   state.fmt = b.dataset.fmt;
   $$('[data-fmt]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-  renderSnippet(cardUrl());
+  renderSnippet(currentUrl());
 }));
-$('#replay').addEventListener('click', () => loadPreview(cardUrl(), true));
+$('#replay').addEventListener('click', () => loadPreview(currentUrl(), true));
 
 async function copy(text, btn) {
   try { await navigator.clipboard.writeText(text); } catch {
@@ -412,7 +422,27 @@ async function copy(text, btn) {
   setTimeout(() => { btn.textContent = label; btn.classList.remove('done'); btn.style.minWidth = ''; }, 1500);
 }
 $('#copy-readme').addEventListener('click', (e) => copy($('#snippet').textContent, e.currentTarget));
-$('#copy-url').addEventListener('click', (e) => copy(cardUrl(), e.currentTarget));
+$('#copy-url').addEventListener('click', (e) => copy(currentUrl(), e.currentTarget));
+
+// Cards / Effects switch.
+const fx = createEffects({
+  root: $('#fx-form'),
+  getLang: () => state.lang,
+  getTheme: () => state.fxTheme,
+  setTheme: (name) => { state.fxTheme = name; },
+  themes: () => config.themes,
+  onChange: (now) => update({ now: Boolean(now) }),
+});
+function setMode(mode) {
+  state.mode = mode;
+  $$('[data-mode]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === mode)));
+  form.hidden = mode === 'effects';
+  $('#fx-form').hidden = mode !== 'effects';
+  if (mode === 'effects') fx.render();
+  try { localStorage.setItem('mode', mode); } catch {}
+  update({ now: true });
+}
+$$('[data-mode]').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
 
 // Keep numbers inside their limits.
 form.addEventListener('change', (e) => {
@@ -456,5 +486,7 @@ function restore() {
   form.elements.locale.value = state.lang === 'ru' ? 'ru' : '';
   restore();
   renderThemes(); renderFields(); applyLang();
-  update({ now: true });
+  let mode = 'cards';
+  try { mode = location.hash.startsWith('#type=') ? 'cards' : localStorage.getItem('mode') || 'cards'; } catch {}
+  setMode(mode === 'effects' ? 'effects' : 'cards');
 })();

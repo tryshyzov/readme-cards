@@ -96,6 +96,37 @@ input, textarea { caret-color: var(--pink); }
 .seg button[aria-pressed="true"] { background: var(--navy-2); color: var(--light); }
 .top .seg { background: rgba(20, 30, 69, .6); }
 
+/* Cards / Effects switch */
+.tabs { margin: 0 0 18px; padding: 4px; }
+.tabs button { padding: 9px 22px; font-size: 15px; font-weight: 600; }
+
+/* Effects form */
+.fx-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 14px; align-items: start; }
+.fx-grid .range, .fx-grid .fx-stops, .fx-grid label:has(textarea) { grid-column: 1 / -1; }
+.fx-grid .range { margin-top: 0; }
+.fx-grid .check { min-height: 36px; }
+.fx-theme { margin-top: 14px; max-width: 260px; }
+.f textarea {
+  width: 100%; padding: 8px 11px; border: 0; border-radius: var(--r-s); resize: vertical;
+  background: var(--ink); color: var(--light); font: 14px/1.5 var(--mono); box-shadow: inset 0 0 0 1px var(--line);
+}
+.fx-color-row, .fx-stops-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.f .fx-color-row .hex { flex: 1; width: auto; min-width: 0; padding: 8px; border: 0; border-radius: var(--r-s); background: var(--ink); font: 500 13px var(--mono); color: var(--light); text-transform: uppercase; box-shadow: inset 0 0 0 1px var(--line); }
+.fx-color-row .hex::placeholder { color: var(--lav); }
+.fx-color-row .hex[aria-invalid="true"] { box-shadow: inset 0 0 0 2px #ffb86b; }
+.f .fx-color-row input[type=color], .f .fx-stops-row input[type=color] {
+  width: 34px; height: 34px; padding: 0; border: 0; border-radius: 50%; cursor: pointer; background: none; flex: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .25);
+}
+.fx-color-row input[type=color]::-webkit-color-swatch-wrapper, .fx-stops-row input[type=color]::-webkit-color-swatch-wrapper { padding: 3px; }
+.fx-color-row input[type=color]::-webkit-color-swatch, .fx-stops-row input[type=color]::-webkit-color-swatch { border: 0; border-radius: 50%; }
+.fx-mini {
+  width: 34px; height: 34px; border: 0; border-radius: 50%; cursor: pointer; background: var(--navy-2); color: var(--light);
+  font-size: 18px; line-height: 1; box-shadow: inset 0 0 0 1px var(--line);
+}
+.fx-mini:hover { box-shadow: inset 0 0 0 1px var(--lav); }
+.hint-s { color: var(--lav-text); font-size: 12px; }
+
 /* Two columns: settings and output */
 .work { display: grid; grid-template-columns: minmax(0, 420px) minmax(0, 1fr); gap: 32px; align-items: start; }
 .controls { display: grid; gap: 14px; }
@@ -239,7 +270,7 @@ h2 { margin: 0; font-size: 16px; font-weight: 600; }
   .url { grid-template-columns: 1fr; }
   .prompt { display: none; }
   .url-actions { justify-items: start; }
-  .grid2 { grid-template-columns: 1fr; }
+  .grid2, .fx-grid { grid-template-columns: 1fr; }
   .box { padding: 16px; }
   .stage { padding: 28px 12px 48px; min-height: 220px; }
 }

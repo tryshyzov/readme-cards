@@ -87,3 +87,28 @@ for (const [card, list] of Object.entries(styles)) {
     }
   }
 }
+
+// Effects: every kind renders well-formed SVG.
+import { waveSvg, WAVE_TYPES } from '../src/effects/wave.js';
+import { typingSvg } from '../src/effects/typing.js';
+import { decorSvg, DECOR_TYPES } from '../src/effects/decor.js';
+import { badgeSvg } from '../src/effects/badge.js';
+
+for (const type of WAVE_TYPES) {
+  for (const section of ['header', 'footer']) {
+    test(`wave / ${type} / ${section}`, () => wellFormed(waveSvg(q(`type=${type}&section=${section}&text=Привет <b>&desc=✦&theme=tryshyzov`))));
+  }
+}
+for (const extra of ['', '&multiline=true', '&repeat=false&center=true', '&font=sans&bold=true']) {
+  test(`typing${extra}`, () => {
+    const svg = typingSvg(q(`lines=Hello;Привет, мир;exit 0${extra}`));
+    wellFormed(svg);
+    for (const m of svg.matchAll(/keyTimes="([^"]+)"/g)) {
+      const k = m[1].split(';').map(Number);
+      assert.equal(k[0], 0); assert.equal(k.at(-1), 1);
+      for (let i = 1; i < k.length; i++) assert.ok(k[i] > k[i - 1], 'keyTimes must increase');
+    }
+  });
+}
+for (const type of DECOR_TYPES) test(`decor / ${type}`, () => wellFormed(decorSvg(q(`type=${type}&text=✦ hi ✦`))));
+test('badge without logo', async () => wellFormed(await badgeSvg(q('label=a&message=b&style=pill&shine=true'))));

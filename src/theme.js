@@ -10,10 +10,11 @@ const T = (bg, title, text, muted, icon, accent, border, track, extra = {}) =>
 export const themes = {
   default: T('0d1117', '58a6ff', 'c9d1d9', '8b949e', '58a6ff', '58a6ff', '30363d', '21262d'),
   // Personal profile tryshyzov: colours from the avatar.
-  tryshyzov: T('233871', 'E75395', 'E6D6F0', 'AF8FC0', 'E75395', 'E75395', '5F3189', '2E4585'),
+  tryshyzov: T('233871', 'E75395', 'E6D6F0', 'AF8FC0', 'E75395', 'E75395', '5F3189', '2E4585',
+    { gradient: ['233871', '5F3189', 'E75395'] }),
   // NowPlay Lab organisation: lavender gradient from the banner.
   nowplaylab: T('135,7A689B,55507F,343759', 'FFFFFF', 'E8E6F2', 'B4AFCF', 'FFFFFF', '772556', '8B85A7', '3B3C61',
-    { font: `Inter, ${SANS}` }),
+    { font: `Inter, ${SANS}`, gradient: ['7A689B', '55507F', '343759'] }),
   github_light: T('ffffff', '0969da', '1f2328', '656d76', '0969da', '0969da', 'd0d7de', 'eaeef2'),
   transparent: T('00000000', '58a6ff', '8b949e', '8b949e', '58a6ff', '58a6ff', '8b949e', '8b949e33'),
   bear: T('1f2023', 'e03c8a', 'bcb28d', '8b8670', '00aeff', 'e03c8a', '2c2d31', '2c2d31'),

@@ -36,6 +36,11 @@ async function graphql(query, variables) {
   const json = await res.json();
   if (json.errors?.length) {
     if (json.errors.some((e) => e.type === 'NOT_FOUND')) throw new NotFound(json.errors[0].message);
+    // Organisations can refuse some tokens (e.g. a fine-grained token that lives too long).
+    if (json.errors.some((e) => e.type === 'FORBIDDEN')) {
+      const owner = variables.owner ?? variables.login ?? '';
+      throw new NotFound(`GitHub does not let this server read ${owner}`.trim());
+    }
     throw new Error(json.errors[0].message);
   }
   return json.data;

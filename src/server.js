@@ -15,6 +15,14 @@ import { streakCard } from './cards/streak.js';
 import { pinCard } from './cards/pin.js';
 import { activityCard } from './cards/activity.js';
 import { pypiCard } from './cards/pypi.js';
+import { waveSvg, WAVE_TYPES, TEXT_ANIMATIONS } from './effects/wave.js';
+import { typingSvg } from './effects/typing.js';
+import { badgeSvg, BADGE_STYLES } from './effects/badge.js';
+import { decorSvg, DECOR_TYPES } from './effects/decor.js';
+
+// Decorative pictures: no GitHub data, so they can be cached for a day.
+const effects = { '/api/wave': waveSvg, '/api/typing': typingSvg, '/api/badge': badgeSvg, '/api/decor': decorSvg };
+const effectOptions = { wave: WAVE_TYPES, textAnimations: TEXT_ANIMATIONS, badge: BADGE_STYLES, decor: DECOR_TYPES };
 
 const PORT = Number(process.env.PORT || 3000);
 const PUBLIC = fileURLToPath(new URL('../public', import.meta.url));
@@ -89,7 +97,7 @@ const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://localhost');
   if (req.method !== 'GET' && req.method !== 'HEAD') { res.writeHead(405).end(); return; }
   if (url.pathname === '/config.json') {
-    res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=600' }).end(JSON.stringify({ themes, styles }));
+    res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=600' }).end(JSON.stringify({ themes, styles, effects: effectOptions }));
     return;
   }
   if (url.pathname === '/health') { res.writeHead(200, { 'Content-Type': 'text/plain' }).end('ok'); return; }
@@ -98,6 +106,15 @@ const server = http.createServer(async (req, res) => {
   const aliases = { '/api': '/api/stats', '/api/top-langs': '/api/langs' };
   const clean = url.pathname.replace(/\/$/, '');
   const routePath = aliases[clean] ?? clean;
+  if (effects[routePath]) {
+    try {
+      sendSvg(res, await effects[routePath](url.searchParams), 86400);
+    } catch (e) {
+      console.error(new Date().toISOString(), url.pathname + url.search, e);
+      res.writeHead(500, { 'Content-Type': 'text/plain' }).end('Could not draw this picture');
+    }
+    return;
+  }
   const route = routes[routePath];
   if (!route) {
     if (serveStatic(url.pathname, res)) return;

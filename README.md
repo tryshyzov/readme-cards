@@ -1,80 +1,156 @@
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&height=180&color=0:233871,55:5F3189,100:E75395&section=header&text=readme-cards&fontColor=E6D6F0&fontSize=52&fontAlignY=38&desc=%E2%9C%A6%20cards%20for%20GitHub%20READMEs%20%E2%9C%A6&descColor=E6D6F0&descSize=16&descAlignY=60" alt="readme-cards"/>
+  <img src="docs/header.svg" alt="readme-cards: cards for GitHub READMEs" width="100%"/>
 </p>
+
+<p align="center"><b>English</b> &nbsp;·&nbsp; <a href="README.ru.md">Русский</a> &nbsp;·&nbsp; <a href="https://cards.tryshyzov.ru">Configurator</a></p>
 
 <p align="center">
-  <a href="https://cards.tryshyzov.ru"><img src="https://img.shields.io/badge/configurator-E75395?style=for-the-badge" alt="Configurator"/></a>
-  <img src="https://img.shields.io/badge/node-%E2%89%A520-233871?style=for-the-badge&logo=nodedotjs&logoColor=E75395" alt="Node 20+"/>
-  <img src="https://img.shields.io/badge/license-MIT-5F3189?style=for-the-badge" alt="MIT"/>
+  <a href="https://cards.tryshyzov.ru"><img src="https://img.shields.io/badge/open_the_configurator-E75395?style=for-the-badge" alt="Open the configurator"/></a>
+  <img src="https://img.shields.io/badge/node-20+-233871?style=for-the-badge&logo=nodedotjs&logoColor=E75395" alt="Node 20+"/>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-5F3189?style=for-the-badge" alt="MIT"/></a>
 </p>
 
-Self-hosted SVG cards for GitHub profiles: stats, languages, streak, repository pins, activity graph and PyPI packages. No third-party card service in between, so the cards do not go down when somebody else's free hosting does.
-/ Свои карточки-картинки для профиля на GitHub: статистика, языки, серия, репозитории, график активности и пакеты PyPI. Работают на своём сервере, без чужих сервисов, которые то и дело падают.
+Cards for your GitHub profile and READMEs: **stats, languages, streak, activity, repository pins and PyPI packages**. They run on your own server, so they don't vanish when somebody else's free card service goes down (github-readme-stats was answering with errors for days).
 
-## ✦ Configurator / Конструктор
+## ✦ What it looks like
 
-Open **https://cards.tryshyzov.ru**, pick a card, a style and colours, copy the line into your README.
-/ Открой **https://cards.tryshyzov.ru**, выбери карточку, стиль и цвета, скопируй строчку в README.
+<p align="center">
+  <img src="https://cards.tryshyzov.ru/api/stats?username=tryshyzov&theme=tryshyzov&hide_border=true" alt="Stats card" height="165"/>
+  <img src="https://cards.tryshyzov.ru/api/langs?username=tryshyzov&theme=tryshyzov&style=donut&hide_border=true" alt="Languages card, donut style" height="165"/>
+</p>
+<p align="center">
+  <img src="https://cards.tryshyzov.ru/api/streak?username=tryshyzov&theme=tryshyzov&hide_border=true" alt="Streak card"/>
+</p>
+<p align="center">
+  <img src="https://cards.tryshyzov.ru/api/pin?username=tryshyzov&repo=FckCensor-Rework&theme=tryshyzov&hide_border=true" alt="Repository card with a long Russian description" width="49%"/>
+  <img src="https://cards.tryshyzov.ru/api/pin?username=nowplaylab&repo=nowplaying-display&theme=nowplaylab&hide_border=true" alt="Repository card, nowplaylab theme" width="49%"/>
+</p>
+<p align="center">
+  <img src="https://cards.tryshyzov.ru/api/stats?username=tryshyzov&theme=tryshyzov&style=terminal&hide_border=true" alt="Stats card, terminal style" height="165"/>
+  <img src="https://cards.tryshyzov.ru/api/pypi?package=lrclib-synced&theme=nowplaylab&hide_border=true" alt="PyPI package card" height="165"/>
+</p>
+<p align="center">
+  <img src="https://cards.tryshyzov.ru/api/activity?username=tryshyzov&theme=tryshyzov&style=heatmap&hide_border=true" alt="Activity card, heatmap style" width="100%"/>
+</p>
 
-## ✦ Cards / Карточки
+These are live: every card above is drawn right now by [cards.tryshyzov.ru](https://cards.tryshyzov.ru).
 
-| Card / Карточка | URL | Styles / Стили |
+## ✦ How to use
+
+1. Open the configurator at **[cards.tryshyzov.ru](https://cards.tryshyzov.ru)**.
+2. Pick a card, a style and a theme, or set every colour yourself.
+3. Copy the line it gives you into your README:
+
+```markdown
+![My stats](https://cards.tryshyzov.ru/api/stats?username=YOUR_NAME&theme=tryshyzov)
+```
+
+Cards refresh on their own: GitHub data is kept for a couple of hours, then fetched again.
+
+**Coming from github-readme-stats?** Change the domain in your links to `cards.tryshyzov.ru`. The parameter names are the same, so your colours carry over.
+
+## ✦ Cards
+
+| Card | Address | Styles |
 |---|---|---|
-| Stats / Статистика | `/api/stats?username=…` | `classic` `grid` `minimal` `terminal` |
-| Languages / Языки | `/api/langs?username=…` | `classic` `compact` `donut` `terminal` |
-| Streak / Серия | `/api/streak?username=…` | `classic` `compact` `terminal` |
-| Activity / Активность | `/api/activity?username=…` | `classic` `bars` `heatmap` `terminal` |
-| Repository / Репозиторий | `/api/pin?username=…&repo=…` | `classic` `terminal` |
-| PyPI | `/api/pypi?package=…` | `classic` `terminal` |
+| Stats | `/api/stats?username=…` | `classic` `grid` `minimal` `terminal` |
+| Languages | `/api/langs?username=…` | `classic` `compact` `donut` `terminal` |
+| Streak | `/api/streak?username=…` | `classic` `compact` `terminal` |
+| Activity | `/api/activity?username=…` | `classic` `bars` `heatmap` `terminal` |
+| Repository | `/api/pin?username=…&repo=…` | `classic` `terminal` |
+| PyPI package | `/api/pypi?package=…` | `classic` `terminal` |
 
-<p align="center">
-  <img src="https://cards.tryshyzov.ru/api/stats?username=tryshyzov&theme=tryshyzov&hide_border=true" alt="stats"/>
-  <img src="https://cards.tryshyzov.ru/api/langs?username=tryshyzov&theme=tryshyzov&style=donut&hide_border=true" alt="languages"/>
-</p>
+Repository descriptions wrap by the real width of the text, so long descriptions and Cyrillic stay inside the card.
 
-Repository descriptions wrap by the real width of the text, so long or Cyrillic descriptions stay inside the card.
-/ Описание репозитория переносится по реальной ширине текста, поэтому длинный и русский текст не вылезает за край.
+<details>
+<summary><b>All options</b></summary>
 
-## ✦ Options / Параметры
-
-| Parameter | What it does / Что делает |
+| Option | What it does |
 |---|---|
 | `theme` | `default`, `tryshyzov`, `nowplaylab`, `github_light`, `transparent`, `bear`, `dracula`, `tokyonight`, `nord`, `gruvbox`, `radical`, `catppuccin`, `synthwave`, `ocean` |
-| `style` | look of the card, see the table above / вид карточки |
-| `bg_color` | `233871` or a gradient `135,233871,E75395` (angle, colours) / цвет или градиент |
-| `title_color` `text_color` `muted_color` `icon_color` `accent_color` `ring_color` `border_color` `track_color` | hex without `#` / цвет без `#` |
-| `hide_border` `hide_title` `disable_animations` | `true` |
-| `border_radius` | 0–40 |
-| `locale` | `en` (default), `ru` |
-| `custom_title` | your own heading / свой заголовок |
-| `hide` | stats: `stars,commits,prs,issues,contribs,ring`; langs: language names |
-| `ring` | stats: `rank` (default) or `contributions` |
-| `langs_count` | 1–12 |
-| `days` / `weeks` | activity chart length / длина графика |
-| `description_lines_count` `show_owner` | pin card |
+| `style` | the look of the card, see the table above |
+| `bg_color` | a colour (`233871`) or a gradient: angle and colours (`135,233871,E75395`) |
+| `title_color` `text_color` `muted_color` `icon_color` `accent_color` `ring_color` `border_color` `track_color` | colours, hex without `#` |
+| `hide_border` `hide_title` `disable_animations` | `true` to turn on |
+| `border_radius` | corner rounding, 0–40 |
+| `locale` | `en` (default) or `ru` |
+| `custom_title` | your own heading |
+| `hide` | stats: any of `stars,commits,prs,issues,contribs,ring`; languages: language names |
+| `ring` | stats: what the ring shows, `rank` (default) or `contributions` |
+| `langs_count` | how many languages, 1–12 |
+| `days` / `weeks` | length of the activity chart |
+| `description_lines_count` `show_owner` | repository card |
 
-Links from github-readme-stats keep working after swapping the domain: the colour names are the same.
-/ Ссылки от github-readme-stats работают, если поменять домен: названия параметров те же.
+</details>
 
-## ✦ Run your own / Запустить у себя
+## ✦ Effects
 
-You need a server with Docker and a domain pointing to it.
-/ Нужен сервер с Docker и домен, который на него смотрит.
+<p align="center">
+  <img src="https://cards.tryshyzov.ru/api/wave?type=waving&section=header&text=readme-cards&desc=cards%20for%20GitHub&color=233871,5F3189,E75395&text_animation=fade" alt="Wave header" width="100%"/>
+</p>
+<p align="center">
+  <img src="https://cards.tryshyzov.ru/api/typing?lines=tryshyzov%40MacBook%20~%20%25%20whoami;tryshyzov&font=mono&size=20&color=E75395&background=233871" alt="Typing text"/>
+</p>
+<p align="center">
+  <img src="https://cards.tryshyzov.ru/api/badge?label=made%20with&message=readme-cards&logo=github&style=for-the-badge&color=E75395&label_color=233871" alt="Badge"/>
+</p>
+<p align="center">
+  <img src="https://cards.tryshyzov.ru/api/decor?type=sparkles&color=E75395&count=12&height=60" alt="Sparkles" width="100%"/>
+</p>
+
+| Effect | Address | Main options |
+|---|---|---|
+| Wave header or footer | `/api/wave` | `type` (`waving` `wave` `rect` `rounded` `slice`), `section` (`header`/`footer`), `text`, `desc`, `color` (one colour or several for a gradient), `text_animation` (`fade` `rise` `glow` `twinkle` `none`) |
+| Typing text | `/api/typing` | `lines` (separated by `;`), `multiline`, `repeat`, `center`, `font` (`mono` `sans` `serif`), `size`, `color`, `background`, `speed`, `pause` |
+| Badge | `/api/badge` | `label`, `message`, `logo` (a [Simple Icons](https://simpleicons.org) name), `style` (`flat` `pill` `for-the-badge`), `color`, `label_color`, `shine` |
+| Decoration | `/api/decor` | `type` (`stars` `line` `dots` `sparkles`), `color`, `count`, `height`, `speed`, `seed`, `text` |
+
+These replace capsule-render, readme-typing-svg and shields.io badges, so a whole profile can live on one server. The configurator has a tab for them.
+
+## ✦ Run your own server
+
+You need a server with Docker, a domain pointing at it, and a GitHub token. The token only reads public data: create a **fine-grained** token at [github.com/settings/tokens](https://github.com/settings/tokens) and give it no extra permissions.
 
 ```bash
 git clone https://github.com/tryshyzov/readme-cards && cd readme-cards
-cp .env.example .env   # put GITHUB_TOKEN and DOMAIN here / впиши токен и домен
+cp .env.example .env
+```
+
+Fill in `.env`:
+
+| Setting | |
+|---|---|
+| `GITHUB_TOKEN` | the token from above |
+| `DOMAIN` | your domain, e.g. `cards.example.com` |
+| `ALLOWED_USERS` | optional: draw cards only for these accounts, comma separated. Empty means anyone |
+| `CACHE_HOURS` | how long to keep GitHub data, 2 by default |
+
+Then start it:
+
+```bash
 docker compose --profile caddy up -d
 ```
 
-Caddy gets the HTTPS certificate by itself. Already have nginx? Run `docker compose up -d` (the service listens on `127.0.0.1:3000`) and use [deploy/nginx.conf.example](deploy/nginx.conf.example).
-/ Уже есть nginx? Запусти `docker compose up -d` и возьми пример настройки из `deploy/nginx.conf.example`.
+Caddy gets the HTTPS certificate by itself; ports 80 and 443 must be free. Open `https://your-domain` and the configurator is there.
 
- The token only needs read access to public repositories (a fine-grained token with no extra permissions is enough). Data is cached for `CACHE_HOURS` (2 by default); if GitHub is down, the last good data keeps being served.
-/ Caddy сам получает сертификат для HTTPS. Токену нужно только чтение публичных репозиториев. Данные кэшируются на `CACHE_HOURS` часов (по умолчанию 2); если GitHub недоступен, отдаются последние удачные.
+**Already have nginx?** Run `docker compose up -d` without the Caddy profile. The service listens on `127.0.0.1:3000`; an example config is in [deploy/nginx.conf.example](deploy/nginx.conf.example).
 
-Without Docker: Node 20+, `GITHUB_TOKEN=… node src/server.js`, port `3000` (or `PORT`). Tests: `npm test`.
+**Without Docker:** Node 20 or newer, then `GITHUB_TOKEN=… node src/server.js`. It listens on port `3000` (or `PORT`).
+
+If GitHub is unreachable, the cards keep showing the last data that came through, instead of an error.
+
+## ✦ Development
+
+```bash
+npm test
+```
+
+The cards live in `src/cards/`, colours and themes in `src/theme.js`, the configurator in `public/`.
+
+## ✦ License
+
+MIT, see [LICENSE](LICENSE).
 
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&height=100&color=0:E75395,45:5F3189,100:233871&section=footer" alt="footer"/>
+  <img src="docs/footer.svg" alt="" width="100%"/>
 </p>
